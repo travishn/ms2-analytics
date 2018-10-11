@@ -5,7 +5,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 9000;
 
 app.get('/test', (req, res) => {
   res.send({
