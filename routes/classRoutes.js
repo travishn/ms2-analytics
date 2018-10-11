@@ -24,8 +24,10 @@ router.post('/class', async (req, res) => {
 });
 
 // Update a class in the DB
-router.put('/class/:id', (req, res) => {
-  res.send({ type: 'PUT' });
+router.put('/class/:id', async (req, res) => {
+  const old = await Class.findByIdAndUpdate({ _id: req.params.id }, req.body);
+  const updated = await Class.findOne({ _id: req.params.id });
+  res.send(updated);
 });
 
 // Delete a class from the DB
