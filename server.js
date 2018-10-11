@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -9,7 +10,7 @@ const PORT = process.env.PORT || 9000;
 
 app.get('/test', (req, res) => {
   res.send({
-    express: 'This is on the correct server'
+    express: "It's over 9000!!!"
   })
 });
 

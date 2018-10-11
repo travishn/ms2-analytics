@@ -40,7 +40,6 @@ class App extends Component {
     return (
       <div className="App">
         <p className="App-intro">{this.state.response}</p>
-        erm
       </div>
     );
   }
