@@ -21,6 +21,10 @@ const SkillSchema = new Schema({
   imageURL: {
     type: String,
     default: 'https://res.cloudinary.com/emanon/image/upload/v1539289913/Unknown.png'
+  },
+  cost: {
+    type: Number,
+    default: 0
   }
 });
 

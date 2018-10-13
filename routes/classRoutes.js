@@ -3,12 +3,23 @@ const router = express.Router();
 const Class = require('../models/class');
 
 // Grab all the classes from the DB
-router.get('/class', (req, res) => {
-  res.send({ type: 'GET' });
+router.get('/class', async (req, res) => {
+  try {
+    const classes = await Class.find({});
+    res.send(classes);
+  } catch (err) {
+    res.send(err);
+  }
 });
 
-router.get('/class/:id', (req, res) => {
-  res.send({ type: 'GET' });
+// Find a specific class by its object ID
+router.get('/class/:id', async (req, res) => {
+  try {
+    const target = await Class.find({ _id: req.params.id });
+    res.send(target);
+  } catch (err) {
+    res.send(err);
+  }
 });
 
 // Add a new class to the DB
@@ -25,9 +36,33 @@ router.post('/class', async (req, res) => {
 
 // Update a class in the DB
 router.put('/class/:id', async (req, res) => {
-  const old = await Class.findByIdAndUpdate({ _id: req.params.id }, req.body);
-  const updated = await Class.findOne({ _id: req.params.id });
-  res.send(updated);
+  try {
+    const old = await Class.findByIdAndUpdate({ _id: req.params.id }, req.body);
+    const updated = await Class.findOne({ _id: req.params.id });
+    res.send(updated);
+  } catch (err) {
+    res.status(422).send({
+      error: 'Class ID does not exist. Please try again.'
+    })
+  }
+});
+
+// Add a class skill in the DB
+router.put('/class/skill/:id', async (req, res) => {
+  try {
+    const old = await Class.findOneAndUpdate(
+      { _id: req.params.id }, 
+      { $push: { skills: req.body.skill } },
+      { runValidators: true }
+    );
+
+    const updated = await Class.findOne({ _id: req.params.id });
+    res.send(updated);
+  } catch (err) {
+    res.status(422).send({
+      error: 'Invalid class skill. Please try again.'
+    });
+  }
 });
 
 // Delete a class from the DB
