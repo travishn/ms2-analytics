@@ -1,48 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import NavBar from './navBar';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      response: ""
-    };
-  }
-
-  // componentDidMount() {
-  //   fetch('/test').then(res => {
-  //     if (res.ok) {
-  //       return res.json();
-  //     } else {
-  //       throw Error(`Request rejected with status ${res.status}`);
-  //     }
-  //   }).then(json => {
-  //     this.setState({
-  //       response: json.express
-  //     });
-  //   }).catch(console.error);
-  // }
-
-  componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
-      .catch(err => console.log(err));
-  }
-
-  callApi = async () => {
-    const response = await fetch("/test");
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-    return body;
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <p className="App-intro">{this.state.response}</p>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <main className='global-main'>
+    <NavBar />
+    <Switch>
+      {/* insert routes for web app here */}
+    </Switch>
+  </main>
+);
 
 export default App;
