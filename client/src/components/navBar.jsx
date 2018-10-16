@@ -6,7 +6,7 @@ class NavBar extends React.Component {
     return (
       <div className='left-nav-child'>
         <Link to='/' className="header-logo">
-          <img className='ms2-logo' src={require('../../public/images/maple-logo.svg')} alt='home-logo'/>
+          {/* <img className='ms2-logo' src={require('../../public/images/maple-logo.svg')} alt='home-logo'/> */}
           <h1>MS2 Anaytics</h1>
         </Link>
       </div>
