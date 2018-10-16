@@ -8,6 +8,11 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+html {
+	height: 100vh;
+	background-image: url("https://res.cloudinary.com/emanon/image/upload/v1539715901/5WYPJby.png");
+	background-size: cover;
+}
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -29,6 +34,8 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 	font-family: maple;
+	text-decoration: none;
+	color: black;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 

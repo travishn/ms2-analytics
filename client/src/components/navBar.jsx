@@ -7,7 +7,7 @@ class NavBar extends React.Component {
       <div className='left-nav-child'>
         <Link to='/' className="header-logo">
           {/* <img className='ms2-logo' src={require('../../public/images/maple-logo.svg')} alt='home-logo'/> */}
-          <h1>MS2 Anaytics</h1>
+          <h1 className='nav-header'>MS2 Analytics</h1>
         </Link>
       </div>
     );
@@ -15,10 +15,18 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <nav className='navbar-container'>
+      <section className='navComp-container'>
         {this.renderLogo()}
-        <p>Insert NavBar Here</p>
-      </nav>
+        <nav className='nav-container'>
+          <ul className='nav-wrapper'>
+            <li>General</li>
+            <li>Classes</li>
+            <li>Guides</li>
+            <li>Dungeons</li>
+            <li>Professions</li>
+          </ul>
+        </nav>
+      </section>
     )
   }
 };

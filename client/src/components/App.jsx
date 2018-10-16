@@ -5,6 +5,7 @@ import NavBar from './navBar';
 const App = () => (
   <main className='global-main'>
     <NavBar />
+    
     <Switch>
       {/* insert routes for web app here */}
     </Switch>
