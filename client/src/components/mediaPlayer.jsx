@@ -11,13 +11,11 @@ class MediaPlayer extends React.Component {
       muted: false, 
       trackLength: 0, 
       played: 0, 
-      inSeek: false};
+      inSeek: false,
+      playing: true };
 
     this.endSong = this.endSong.bind(this);
-    this.onDuration = this.onDuration.bind(this);
     this.formatTime = this.formatTime.bind(this);
-    this.onProgress = this.onProgress.bind(this);
-    this.initiatePlayer = this.initiatePlayer.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -64,22 +62,45 @@ class MediaPlayer extends React.Component {
     this.player.seekTo(parseFloat(e.target.value));
   }
 
+  pausePlay() {
+    const button = (document.querySelector('.media-player-buttons').childNodes[0]);
+    if (button.classList.contains('media-pause-button')) {
+      this.setState({ playing: false });
+
+      button.classList.remove('media-pause-button');
+      button.classList.add('media-play-button');
+    } else if (button.classList.contains('media-play-button')) {
+      this.setState({ playing: true });
+
+      button.classList.remove('media-play-button');
+      button.classList.add('media-pause-button');
+    }
+  }
+
   render() {
     return (
       <section className='media-player-container'>
         <div className='media-player-controls'>
           <ReactPlayer 
             url={this.state.songs[this.state.counter].url} 
-            playing={true}
+            playing={this.state.playing}
             width="0px"
             height="0px"
             volume={this.state.volume}
             muted={this.state.muted}
             onEnded={this.endSong}
-            onDuration={this.onDuration}
-            onProgress={this.onProgress}
-            ref={this.initiatePlayer}
+            onDuration={(duration) => this.onDuration(duration)}
+            onProgress={(state) => this.onProgress(state)}
+            ref={(player) => this.initiatePlayer(player)}
             />
+        </div>
+
+        <div className="media-player-buttons">
+          <button
+            className="media-pause-button"
+            onClick={() => this.pausePlay()}
+          >
+          </button>
         </div>
 
         <div className="track-slider-container">
