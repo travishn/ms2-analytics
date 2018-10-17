@@ -1,14 +1,18 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import NavBar from './navBar';
+import Home from './Home';
+import MediaPlayer from './mediaPlayer';
 
 const App = () => (
   <main className='global-main'>
     <NavBar />
-    
+
     <Switch>
-      {/* insert routes for web app here */}
+      <Route path="/" component={ Home } />
     </Switch>
+
+    <MediaPlayer />
   </main>
 );
 
