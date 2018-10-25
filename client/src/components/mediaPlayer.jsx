@@ -6,20 +6,18 @@ class MediaPlayer extends React.Component {
     super(props);
     this.state = { 
       counter: 0, 
-      songs: [{ url: "https://s3-us-west-1.amazonaws.com/ms2-analytics/lith-harbor.mp3", duration: 175 }], 
-      volume: 0.75, 
+      songs: [{ title: "Lith Harbor OST", url: "https://s3-us-west-1.amazonaws.com/ms2-analytics/lith-harbor.mp3", duration: 175 }], 
+      volume: 0.75,
+      previousVolume: 0.75, 
       muted: false, 
       trackLength: 0, 
       played: 0, 
       inSeek: false,
-      playing: true };
+      volumeClass: 'volume-icon',
+      playing: false };
 
     this.endSong = this.endSong.bind(this);
     this.formatTime = this.formatTime.bind(this);
-  }
-
-  componentWillReceiveProps(newProps) {
-    console.log(newProps);
   }
 
   formatTime(seconds) {
@@ -77,6 +75,23 @@ class MediaPlayer extends React.Component {
     }
   }
 
+  toggleMute() {
+    if (this.state.muted) {
+      this.setState({ volumeClass: 'volume-icon' });
+      this.setState({ volume: this.state.previousVolume });
+    } else {
+      this.setState({ previousVolume: this.state.volume });
+      this.setState({ volumeClass: 'muted-icon' });
+      this.setState({ volume: 0 });
+    }
+
+    this.setState({ muted: !this.state.muted });
+  }
+
+  changeVolume(e) {
+    this.setState({ volume: parseFloat(e.target.value) });
+  }
+
   render() {
     return (
       <section className='media-player-container'>
@@ -93,40 +108,68 @@ class MediaPlayer extends React.Component {
             onProgress={(state) => this.onProgress(state)}
             ref={(player) => this.initiatePlayer(player)}
             />
-        </div>
 
-        <div className="media-player-buttons">
-          <button
-            className="media-pause-button"
-            onClick={() => this.pausePlay()}
-          >
-          </button>
-        </div>
-
-        <div className="track-slider-container">
-          <div className="track-current-time">
-            {this.formatTime(Math.round(this.state.played * this.state.trackLength))}
+          <div className="media-player-buttons">
+            <button
+              className="media-play-button"
+              onClick={() => this.pausePlay()}
+            >
+            </button>
           </div>
 
-          <div className="track-slider">
-            <input
-              className="track-progress"
-              type='range' min={0} max={1}
-              step='any' value={this.state.played}
-              onChange={(e) => this.seekChange(e)}
-              onMouseDown={() => this.seekClick()}
-              onMouseUp={(e) => this.seekUnClick(e)}
-            />
-            <div
-              className="playback-progress"
-              style={{ "width": this.state.played * 487 }}>
+          <div className="track-slider-container">
+            <div className="track-current-time">
+              {this.formatTime(Math.round(this.state.played * this.state.trackLength))}
+            </div>
+
+            <div className="track-slider">
+              <input
+                className="track-progress"
+                type='range' min={0} max={1}
+                step='any' value={this.state.played}
+                onChange={(e) => this.seekChange(e)}
+                onMouseDown={() => this.seekClick()}
+                onMouseUp={(e) => this.seekUnClick(e)}
+              />
+              <div className="playback-slider-track"></div>
+              <div
+                className="playback-progress"
+                style={{ "width": this.state.played * 487 }}>
+              </div>
+            </div>
+            <div className="track-progress-length">
+              {this.formatTime(Math.round(this.state.trackLength))}
             </div>
           </div>
 
-          <div className="track-progress-length">
-            {this.formatTime(Math.round(this.state.trackLength))}
+          <div className="volume-wrapper">
+            <div className="volume-modal">
+              <div className={this.state.volumeClass} onClick={() => this.toggleMute()}></div>
+              <p className="pointer"></p>
+              <div className="volume-content">
+                <div className="volume-line-box">
+                  <div className="volume-line"></div>
+                </div>
+
+                <input className="volume-slider" type="range"
+                  step="any" min="0" max="1"
+                  value={this.state.volume}
+                  onChange={(e) => this.changeVolume(e)}
+                  style={Object.assign({}, { position: 'absolute' },
+                    { bottom: '45px' },
+                    { right: '-24px' },
+                    { width: '92px' })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="info-container">
+            <p className="song-title">
+              {this.state.songs[this.state.counter].title}
+            </p>
           </div>
         </div>
+
       </section>
     );
   }
