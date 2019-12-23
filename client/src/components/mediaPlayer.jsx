@@ -7,8 +7,8 @@ class MediaPlayer extends React.Component {
     this.state = { 
       counter: 0, 
       songs: [{ title: "Lith Harbor OST", url: "https://s3-us-west-1.amazonaws.com/ms2-analytics/lith-harbor.mp3", duration: 175 }], 
-      volume: 0.75,
-      previousVolume: 0.75, 
+      volume: 0.5,
+      previousVolume: 0.5, 
       muted: false, 
       trackLength: 0, 
       played: 0, 
